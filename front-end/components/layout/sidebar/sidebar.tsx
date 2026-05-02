@@ -17,7 +17,7 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="flex flex-col gap-8 min-w-64 h-auto bg-[#F8FAFC] border-r-[#E2E8F0] border px-4 py-6">
+    <aside className="hidden md:flex flex-col gap-8 min-w-64 h-auto bg-[#F8FAFC] border-r-[#E2E8F0] border px-4 py-6">
       <div className="flex gap-2">
         <Link href={"/dashboard"}>
           <Image
@@ -49,10 +49,10 @@ export default function Sidebar() {
       </nav>
 
       <div className="flex flex-col gap-2 mt-auto">
-        <button className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-[#C01010] rounded-lg text-white font-semibold">
+        {/* <button className="flex items-center justify-center gap-2 w-full px-4 py-3 bg-[#C01010] rounded-lg text-white font-semibold">
           <Plus size={20} strokeWidth={2.5} />
-          Create Task
-        </button>
+          Criar Tarefa
+        </button> */}
         <Link href="#" className="flex px-4 py-3 items-center text-[#64748B_!important] font-semibold gap-3">
           <HelpCircle size={20} strokeWidth={1.8} />
           <span>Suporte</span>

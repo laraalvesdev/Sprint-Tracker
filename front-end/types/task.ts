@@ -1,3 +1,4 @@
+
 export interface TaskData {
   listId: string;
   title: string;
@@ -16,7 +17,7 @@ export interface UpdateTaskData {
   dueDate?: string;
 }
 
-export interface TaskResponse {
+export interface Task {
   id: string;
   listId: string;
   title: string;
@@ -26,7 +27,15 @@ export interface TaskResponse {
   dueDate?: string;
   createdAt: string;
   updatedAt: string;
-  priority?: "HIGH" | "MEDIUM" | "LOW";
+  priority?: Priority;
+}
+
+export type Priority = 'HIGH' | 'MEDIUM' | 'LOW';
+
+export interface BacklogTask extends Task {
+  priority: Priority;
+  code: string;
+  commentsCount?: number;
 }
 
 export interface ColumnType {
