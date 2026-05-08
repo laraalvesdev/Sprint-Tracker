@@ -1,7 +1,8 @@
 # -------------------------
 # Etapa inicial: Construção
 # --------------------------
-FROM node:22-slim AS build
+FROM node:22-slim AS build 
+# O tamanho da imagem é reduzido, tamanho médio para projetos em Node.js
 
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
@@ -53,4 +54,4 @@ ENV NODE_ENV=production
 # Expõe a porta do container
 EXPOSE 3000
 
-CMD ["node", "dist/main.js"]
+CMD ["node", "dist/src/main.js"]
