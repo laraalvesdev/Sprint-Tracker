@@ -60,6 +60,8 @@ async function bootstrap() {
     type: VersioningType.URI,
   });
 
+  //Filter
+  app.useGlobalFilters(new HttpExceptionFilter());
   // Swagger Configuration
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Sprint Tacker API - IESB')

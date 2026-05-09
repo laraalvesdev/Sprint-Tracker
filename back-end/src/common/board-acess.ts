@@ -18,13 +18,6 @@ export type RequiredRole = 'OWNER' | 'ADMIN' | 'MEMBER' | 'OBSERVER';
 
 // ─── Core resolver ────────────────────────────────────────────────────────────
 
-/**
- * Fetches the board and resolves the effective role of `userId` on it.
- *
- * Throws:
- *  - NotFoundException  – board does not exist or is archived (unless `allowArchived`)
- *  - ForbiddenException – user has no membership and is not the owner
- */
 export async function resolveBoardAccess(
   prisma: PrismaService,
   boardId: string,
@@ -45,7 +38,7 @@ export async function resolveBoardAccess(
   });
 
   if (!board || (!options.allowArchived && board.isArchived)) {
-    throw new NotFoundException(`Board ${boardId} not found`);
+    throw new NotFoundException(Board ${boardId} not found);
   }
 
   const isOwner = board.ownerId === userId;
@@ -77,12 +70,6 @@ export async function resolveBoardAccess(
 
 // ─── Guard helpers ────────────────────────────────────────────────────────────
 
-/**
- * Resolves access AND asserts the user meets `required` role level.
- *
- * Role hierarchy (least → most privileged):
- *   OBSERVER < MEMBER < ADMIN < OWNER
- */
 export async function assertBoardAccess(
   prisma: PrismaService,
   boardId: string,
@@ -103,7 +90,7 @@ export async function assertBoardAccess(
 
   if (!permitted) {
     throw new ForbiddenException(
-      `This action requires ${required} role or higher`,
+      This action requires ${required} role or higher,
     );
   }
 
@@ -112,28 +99,24 @@ export async function assertBoardAccess(
 
 // ─── Convenience wrappers ─────────────────────────────────────────────────────
 
-/** User must be at least an OBSERVER (any board member). */
 export const assertBoardObserver = (
   prisma: PrismaService,
   boardId: string,
   userId: string,
 ) => assertBoardAccess(prisma, boardId, userId, 'OBSERVER');
 
-/** User must be at least a MEMBER (can create/edit tasks). */
 export const assertBoardMember = (
   prisma: PrismaService,
   boardId: string,
   userId: string,
 ) => assertBoardAccess(prisma, boardId, userId, 'MEMBER');
 
-/** User must be at least an ADMIN (can manage members, labels, lists). */
 export const assertBoardAdmin = (
   prisma: PrismaService,
   boardId: string,
   userId: string,
 ) => assertBoardAccess(prisma, boardId, userId, 'ADMIN');
 
-/** User must be the board OWNER (delete board, transfer ownership). */
 export const assertBoardOwner = (
   prisma: PrismaService,
   boardId: string,
